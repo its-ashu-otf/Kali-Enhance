@@ -1,4 +1,4 @@
-# Kali-Linux-Fix
+# Fix my Kali
 
 A Little Repository that makes using Kali-linux far more pleasant.
 
@@ -7,9 +7,9 @@ A Little Repository that makes using Kali-linux far more pleasant.
 Run this script using this
 
 ```bash
-  git clone https://github.com/its-ashu-otf/Kali-Linux-Fixes.git
+  git clone https://github.com/its-ashu-otf/Fix-my-Kali.git
   
-  cd Kali-Linux-Fix
+  cd Fix-my-Kali
 
   chmod +x <script_name>.sh
 
