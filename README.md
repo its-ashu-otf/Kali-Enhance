@@ -1,5 +1,6 @@
-# SnapD-Fix
-A bash Script which fixes snapd for Kali Linux
+# Kali-Linux-Fix
+
+A Little Repository that makes using Kali-linux far more pleasant.
 
 ## Installation
 
@@ -8,11 +9,11 @@ Run this script using this
 ```bash
   git clone https://github.com/its-ashu-otf/SnapD-Fix.git
   
-  cd SnapD-Fix
+  cd Kali-Linux-Fix
 
-  chmod +x snapd_fixer.sh
+  chmod +x <script_name>.sh
 
-  sudo ./snapd_fixer.sh
+  sudo ./<script_name>.sh
 ```
 
 
