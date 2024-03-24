@@ -7,7 +7,7 @@ A Little Repository that makes using Kali-linux far more pleasant.
 Run this script using this
 
 ```bash
-  git clone https://github.com/its-ashu-otf/SnapD-Fix.git
+  git clone https://github.com/its-ashu-otf/Kali-Linux-Fixes.git
   
   cd Kali-Linux-Fix
 
