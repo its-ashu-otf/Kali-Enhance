@@ -16,6 +16,12 @@ Run this script using this
   sudo ./<script_name>.sh
 ```
 
+## About Scripts
+
+| Name            | What it does?                                                              |
+| ----------------- | ------------------------------------------------------------------ |
+| numlockfix.sh | This Script enables the numlock key on every Kali Boot. | 
+| snapd_fixer.sh| This Script fixes snapd and it adds it to enviroment variables.  |
 
 ## Badges
 
