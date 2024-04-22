@@ -31,6 +31,25 @@ sed -i '$ a\
 \n    command sudo "$@" \
 \n  fi \
 \n}' ~/.zshrc
+echo " "
+echo "Adding Nala to .bashrc to convert APT to Nala"
+sed -i '$ a\
+\napt() { \
+\n  command nala "$@" \
+\n} \
+\nsudo() { \
+\n  if [ "$1" = "apt" ]; then \
+\n    shift \
+\n    command sudo nala "$@" \
+\n  else \
+\n    command sudo "$@" \
+\n  fi \
+\n}' ~/.bashrc
 
+echo " "
+echo "Sourcing the zshrc & bashrc file"
+source ~/.zshrc
+source ~/.bashrc
+echo " "
 echo " "
 echo "Done ! Now you can install programs with apt or nala command and it will always work perfectly!"
