@@ -10,7 +10,7 @@ echo "BurpInstaller By Ashu"
 
 echo " "
 
-echo "Make sure to active burpsuite proffesional Before Running this script"
+echo "Make sure to activate burpsuite proffesional Before Running this script"
 
 echo " "
 
@@ -22,7 +22,7 @@ echo " "
 
 echo "Moving Files to the new burpsuite_pro Directory"
 
-sudo mv *.jar /usr/bin 
+sudo mv *.jar /usr/bin/burpsuite_pro 
 
 echo "Changing Directory...."
 
@@ -32,7 +32,7 @@ echo " "
 
 echo "Defining Custom Script to launch BurpSuite Proffesional"
 
-sudo echo -e '#!/bin/bash\necho "Burploader By Ashu"\n"/usr/lib/jvm/java-21-openjdk-amd64/bin/java" "--add-opens=java.desktop/javax.swing=ALL-UNNAMED" "--add-opens=java.base/java>' >> burp.sh
+sudo echo -e '#!/bin/bash\necho "Burploader By Ashu"\n \n "/usr/lib/jvm/java-21-openjdk-amd64/bin/java" "--add-opens=java.desktop/javax.swing=ALL-UNNAMED" "--add-opens=java.base/java.lang=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED" "--add-opens=java.base/jdk.internal.org.objectweb.asm.Opcodes=ALL-UNNAMED" "-javaagent:burploader.jar" "-noverify" "-jar" "/usr/bin/burpsuite_pro/burpsuite_pro_v2024.3.1.jar" ' >> burp.sh
 
 echo " "
 
