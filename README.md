@@ -8,6 +8,7 @@ A Little Repository that makes using Kali-linux far more pleasant.
 Run this script using this
 
 ```bash
+  cd
   git clone https://github.com/its-ashu-otf/Fix-my-Kali.git
   cd Fix-my-Kali
   chmod +x *.sh
