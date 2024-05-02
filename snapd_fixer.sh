@@ -39,6 +39,9 @@ read -r answer
 
 if [[ "$answer" =~ ^[Yy][Ee][Ss]$ ]]; then
 	sudo systemctl enable snapd
+ 	sudo systemctl start snapd
+ 	sudo systemctl enable snapd.apparmor
+  	sudo systemctl start snapd.apparmor
 elif [[ "$answer" =~ ^[Nn][Oo]$ ]]; then
     echo "You chose not to automate."
 else
