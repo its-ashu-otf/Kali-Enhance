@@ -14,7 +14,10 @@ sudo nala fetch
 echo " "
 echo "Adding Nala to .zshrc to convert APT to Nala"
 
-echo 'apt() { 
+echo '
+# Convert APT to NALA
+
+apt() { 
   command nala "$@"
 }
 sudo() {
@@ -29,7 +32,10 @@ sudo() {
 echo " "
 echo "Adding Nala to .bashrc to convert APT to Nala"
 
-echo 'apt() { 
+echo '
+# Convert APT to NALA
+
+apt() { 
   command nala "$@"
 }
 sudo() {
