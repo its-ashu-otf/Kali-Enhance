@@ -15,16 +15,23 @@ cat << "EOF"
                                                                                            |______|               |______|           
 EOF
 
-echo " "
+# Check if running with sudo privileges
 if [ "$EUID" -ne 0 ]; then
-    echo "This script must be run with sudo."
-    exit 1
+    echo "This script needs to be run with sudo privileges."
+    read -p "Do you want to escalate? (y/n): " choice
+    if [ "$choice" == "y" ]; then
+        sudo "$0" "$@"  # Execute this script with sudo
+    else
+        echo "Script execution aborted."
+        exit 1
+    fi
 fi
 
-echo "Running with sudo privileges."
+echo "Running with sudo privileges!"
 echo " "
 echo "Installing numlockx, if already installed it will be skipped..."
-sudo apt-get install numlockx
+sudo apt update
+sudo apt install numlockx -y
 echo " "
 echo "Adding numlockx to your light-dm config... "
 sudo sed -i '/^\[Seat:\*\]/a greeter-setup-script=/usr/bin/numlockx on' /etc/lightdm/lightdm.conf
@@ -32,4 +39,3 @@ echo " "
 echo "Done ! "
 echo ""
 echo "Now! when you reboot your system numlock will be enabled automatically :)"
-
