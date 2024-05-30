@@ -18,44 +18,49 @@ EOF
 
 echo " "
 
+# Check for root privileges
 if [ "$EUID" -ne 0 ]; then
     echo "This script must be run with sudo."
     exit 1
 fi 
+
 echo "Running with sudo privileges."
 echo " "
-echo "Checking the repository and updating it...."
-#usual repository and package updates
-sudo apt update
+echo "Updating system repositories and packages..."
+sudo apt update && sudo apt upgrade -y
 echo " "
-sudo apt upgrade -y
-echo " "
-echo "Installing Snap, If already installed it will be skipped.....:)"
-#checking if snapd is installed or not
-sudo apt install snapd
-echo " "
-echo "Do you want to automate the snapd daemon to start automatically with the boot process (yes/no)"
-read -r answer
 
-if [[ "$answer" =~ ^[Yy][Ee][Ss]$ ]]; then
-	sudo systemctl enable snapd
- 	sudo systemctl start snapd
- 	sudo systemctl enable snapd.apparmor
-  	sudo systemctl start snapd.apparmor
-elif [[ "$answer" =~ ^[Nn][Oo]$ ]]; then
-    echo "You chose not to automate."
-else
-    echo "Invalid input. Please enter 'yes' or 'no'."
-fi
+echo "Ensuring Snap is installed..."
+sudo apt install -y snapd
+echo " "
+
+echo "Do you want to enable Snapd services to start automatically on boot? (yes/no)"
+read -r enable_snapd
+
+case $enable_snapd in
+    [Yy][Ee][Ss])
+        echo "Enabling Snapd services..."
+        sudo systemctl enable snapd
+        sudo systemctl start snapd
+        sudo systemctl enable snapd.apparmor
+        sudo systemctl start snapd.apparmor
+        ;;
+    [Nn][Oo])
+        echo "Snapd services will not be enabled on boot."
+        ;;
+    *)
+        echo "Invalid input. Please enter 'yes' or 'no'."
+        ;;
+esac
 
 echo " "
-echo "Linking Snapd to local application path"
-#this will link snapd paths with local application paths 
+echo "Linking Snapd to local application path..."
 ln -s /var/lib/snapd/desktop/applications ~/.local/share/applications/snap
 echo " "
-echo "Adding Snapd Binaries to System-Wide Enviroment Variables"
+
+echo "Adding Snapd binaries to system-wide environment variables..."
 sudo sed -i '/^PATH=/ s|$|:/snap/bin|' /etc/environment
 echo " "
-echo "you might need to restart your system for the changes to take effect globally"
 
+echo "Please consider restarting your system for the changes to take effect globally."
 
