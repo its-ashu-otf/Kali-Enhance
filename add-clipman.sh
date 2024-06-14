@@ -18,11 +18,8 @@ if pgrep -x "xfce4-clipman" >/dev/null; then
     echo "Clipman is already running."
 else
     echo "Starting Clipman..."
-    xfce4-clipman &
+    nohup xfce4-clipman &>/dev/null &
 fi
-
-# Installing xmlstarlet
-sudo apt-get install xmlstarlet -y
 
 # Ensure Clipman starts on login
 AUTOSTART_DIR="$HOME/.config/autostart"
@@ -46,27 +43,14 @@ EOL
 echo "Clipman is configured to start on login."
 
 # Set keyboard shortcut for Clipman history
-KEYBOARD_SETTINGS_FILE="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
+SUPER_V_PATH="/commands/custom/<Super>v"
 
-# Backup existing keyboard settings
-cp "$KEYBOARD_SETTINGS_FILE" "${KEYBOARD_SETTINGS_FILE}.bak"
+# Remove existing shortcut if any
+xfconf-query -c xfce4-keyboard-shortcuts -r "$SUPER_V_PATH" 2>/dev/null
 
-# Add the Super+V shortcut
-if grep -q "<property name=\"&lt;super&gt;v\"" "$KEYBOARD_SETTINGS_FILE"; then
-    echo "Shortcut Super+V already exists. Skipping..."
-else
-    xmlstarlet ed -L \
-        -s '/channel/property[@name="commands"]/property[@name="default"]' -t elem -n "property" -v "" \
-        -i '/channel/property[@name="commands"]/property[@name="default"]/property[not(@*)]' -t attr -n "name" -v "<Super>v" \
-        -i '/channel/property[@name="commands"]/property[@name="default"]/property[@name="<Super>v"]' -t attr -n "type" -v "string" \
-        -u '/channel/property[@name="commands"]/property[@name="default"]/property[@name="<Super>v"]' -v "xfce4-clipman-history" \
-        "$KEYBOARD_SETTINGS_FILE"
+# Add new shortcut
+xfconf-query -c xfce4-keyboard-shortcuts -n -t string -p "$SUPER_V_PATH" -s "xfce4-clipman-history"
 
-    echo "Shortcut Super+V set for xfce4-clipman-history."
-fi
-
-# Reload xfce4-keyboard-settings
-xfconf-query -c xfce4-keyboard-shortcuts -r /commands/custom/<Super>v
-xfconf-query -c xfce4-keyboard-shortcuts -n -t string -p /commands/custom/<Super>v -s "xfce4-clipman-history"
+echo "Shortcut Super+V set for xfce4-clipman-history."
 
 echo "Clipman setup and configuration completed."
