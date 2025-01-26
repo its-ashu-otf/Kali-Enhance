@@ -1,8 +1,8 @@
-# Kali-Enhance
+# Kali-Enhance ⚙️🛠️
 
 Kali-Enhance is a collection of scripts & add-ons designed to improve the functionality and usability of a Kali Linux system. These scripts automate the installation and configuration of essential tools and services, making your Kali Linux experience more efficient and user-friendly.
 
-## Getting Started
+## Getting Started ⚡
 
 To get started with Kali-Enhance, follow these instructions:
 
@@ -18,7 +18,7 @@ To get started with Kali-Enhance, follow these instructions:
   bash additional-package-managers.sh
   ```
 
-## Scripts Overview
+## Scripts Overview 🧷
 
 ### clipboard-manager.sh
 
