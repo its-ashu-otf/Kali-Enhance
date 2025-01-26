@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Author: its_ashu_otf
+# Script to install and configure clipboard manager on Xfce
+# Repository: github.com/its-ashu-otf/Kali-Enhance
+
 # Function to check if a command exists
 command_exists() {
     command -v "$1" >/dev/null 2>&1
@@ -11,7 +15,12 @@ install_clipman() {
         echo "Clipman is already installed."
     else
         echo "Clipman is not installed. Installing..."
-        sudo apt update && sudo apt install xfce4-clipman -y
+        if sudo apt update && sudo apt install xfce4-clipman -y; then
+            echo "Clipman installed successfully."
+        else
+            echo "Failed to install Clipman." >&2
+            exit 1
+        fi
     fi
 }
 
@@ -21,7 +30,12 @@ start_clipman() {
         echo "Clipman is already running."
     else
         echo "Starting Clipman..."
-        nohup xfce4-clipman &>/dev/null &
+        if command_exists nohup; then
+            nohup xfce4-clipman &>/dev/null &
+        else
+            echo "nohup command not found. Please install it." >&2
+            exit 1
+        fi
     fi
 }
 
@@ -54,10 +68,10 @@ EOL
 # Function to configure the keyboard shortcut for Super + V
 configure_shortcut() {
     # The keybinding path for Super+V
-    SUPER_V_PATH="/xfce4-keyboard-shortcuts/custom/Super+V"
+    SUPER_V_PATH="/commands/custom/<Super>v"
 
     # Remove existing shortcut if any
-    xfconf-query -c xfce4-keyboard-shortcuts -r "$SUPER_V_PATH" 2>/dev/null
+    xfconf-query -c xfce4-keyboard-shortcuts -p "$SUPER_V_PATH" -r 2>/dev/null
 
     # Add new shortcut for Clipman history
     xfconf-query -c xfce4-keyboard-shortcuts -n -t string -p "$SUPER_V_PATH" -s "xfce4-clipman-history"

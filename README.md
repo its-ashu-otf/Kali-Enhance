@@ -1,36 +1,64 @@
-## Fix-my-Kali                                                       
+# Kali-Enhance
 
+Kali-Enhance is a collection of scripts & add-ons designed to improve the functionality and usability of a Kali Linux system. These scripts automate the installation and configuration of essential tools and services, making your Kali Linux experience more efficient and user-friendly.
 
-A Little Repository that makes using Kali-linux far more pleasant.
+## Getting Started
 
-## Installation
+To get started with Kali-Enhance, follow these instructions:
 
-Run this script using this
+1. Clone the repository:
+  ```bash
+  git clone https://github.com/yourusername/Kali-Enhance.git
+  cd Kali-Enhance
+  ```
 
-```bash
-  cd
-  git clone https://github.com/its-ashu-otf/Fix-my-Kali.git
-  cd Fix-my-Kali
-  chmod +x *.sh
-```
+2. Run the scripts as needed:
+  ```bash
+  bash clipboard-manager.sh
+  bash additional-package-managers.sh
+  ```
 
-Now you can run script directly using 
+## Scripts Overview
 
-`./<script_name>.sh`
+### clipboard-manager.sh
 
-## About Scripts
+This script installs and configures a clipboard manager (Clipman) on Xfce. It aims to provide a clipboard manager similar to Windows. It performs the following tasks:
 
-| Name            | What it does?                                                              |
-| ----------------- | ------------------------------------------------------------------ |
-| numlockfix.sh | This Script enables the numlock key on every Kali Boot. | 
-| snapd_fixer.sh| This Script fixes snapd and it adds it to enviroment variables.  |
-| Thorium_installer.sh| This Script installs thorium automatically  |
-| Convert Apt to Nala.sh | This Script Converts APT to  Nala So that you can install programs with apt or nala command and it will always work perfectly! |
-| no-3d-support-from-vmware-fix.sh | Fix for blacklisted vmware drivers |
-| BurpSuite_installer.sh | BurpSuite Proffesional Installer |
+- Checks if Clipman is installed and installs it if necessary.
+- Ensures Clipman is running.
+- Configures Clipman to start on login.
+- Sets up a keyboard shortcut (Super + V) for accessing Clipman history.
 
-## Note
-* Before Running BurpSuite installer make sure you have the script is located where you have extracted the burpsuite zip & activated it
-## Badges
+### additional-package-managers.sh
 
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+This script installs additional package managers (Flatpak and Snap) on Kali Linux. It performs the following tasks:
+
+- Updates system repositories.
+- Installs Flatpak and adds the Flathub repository.
+- Installs Snapd and ensures its services are enabled and started.
+- Adds Snapd and Flatpak directories to the system-wide environment variables.
+
+Both scripts are designed to enhance the functionality and usability of a Kali Linux system.
+## Scripts Overview
+
+### clipboard-manager.sh
+
+This script installs and configures a clipboard manager (Clipman) on Xfce.
+It aims to provide a clipboard manager just like Windows.
+It performs the following tasks:
+
+- Checks if Clipman is installed and installs it if necessary.
+- Ensures Clipman is running.
+- Configures Clipman to start on login.
+- Sets up a keyboard shortcut (Super + V) for accessing Clipman history.
+
+### additional-package-managers.sh
+
+This script installs additional package managers (Flatpak and Snap) on Kali Linux. It performs the following tasks:
+
+- Updates system repositories.
+- Installs Flatpak and adds the Flathub repository.
+- Installs Snapd and ensures its services are enabled and started.
+- Adds Snapd and Flatpak directories to the system-wide environment variables.
+
+Both scripts are designed to enhance the functionality and usability of a Kali Linux system.
