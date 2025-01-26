@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Script Title: Additional Package Managers
 # Author: its_ashu_otf

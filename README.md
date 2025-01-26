@@ -38,27 +38,20 @@ This script installs additional package managers (Flatpak and Snap) on Kali Linu
 - Installs Snapd and ensures its services are enabled and started.
 - Adds Snapd and Flatpak directories to the system-wide environment variables.
 
-Both scripts are designed to enhance the functionality and usability of a Kali Linux system.
-## Scripts Overview
+### Wi-Fi Driver Installer for 8821au
 
-### clipboard-manager.sh
+This script installs the Wi-Fi driver for the 8821au chipset on Kali Linux. It automates the process of checking for system updates, installing necessary dependencies, and cloning and running the driver installation script from a GitHub repository.
 
-This script installs and configures a clipboard manager (Clipman) on Xfce.
-It aims to provide a clipboard manager just like Windows.
-It performs the following tasks:
+#### Features
 
-- Checks if Clipman is installed and installs it if necessary.
-- Ensures Clipman is running.
-- Configures Clipman to start on login.
-- Sets up a keyboard shortcut (Super + V) for accessing Clipman history.
+- Checks for system package updates and prompts the user to update if available.
+- Installs necessary dependencies for building and installing the driver.
+- Clones the driver repository from GitHub.
+- Runs the driver installation script with sudo privileges.
 
-### additional-package-managers.sh
+#### Prerequisites
 
-This script installs additional package managers (Flatpak and Snap) on Kali Linux. It performs the following tasks:
-
-- Updates system repositories.
-- Installs Flatpak and adds the Flathub repository.
-- Installs Snapd and ensures its services are enabled and started.
-- Adds Snapd and Flatpak directories to the system-wide environment variables.
+- Kali Linux
+- sudo privileges
 
 Both scripts are designed to enhance the functionality and usability of a Kali Linux system.
