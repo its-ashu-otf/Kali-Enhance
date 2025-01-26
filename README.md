@@ -14,8 +14,7 @@ To get started with Kali-Enhance, follow these instructions:
 
 2. Run the scripts as needed:
   ```bash
-  bash clipboard-manager.sh
-  bash additional-package-managers.sh
+  bash <script_name>.sh
   ```
 
 ## Scripts Overview 🧷
