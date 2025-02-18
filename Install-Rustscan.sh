@@ -28,12 +28,9 @@ sudo apt update && sudo apt install -y wget curl || die "Failed to install depen
 
 # Fetch the latest RustScan release URL
 echo -e "\e[36m🌍 Fetching the latest RustScan release...\e[0m"
-RUSTSCAN_URL=$(curl -s https://api.github.com/repos/RustScan/RustScan/releases/latest | jq -r '.assets[] | select(.name | test("linux-amd64.*\\.deb$")) | .browser_download_url')
-
-# Check if URL is valid
-if [[ -z "$RUSTSCAN_URL" ]]; then
-    die "Failed to fetch a valid RustScan download URL"
-fi
+RUSTSCAN_URL=$(curl -s https://api.github.com/repos/RustScan/RustScan/releases/latest |
+    grep -E 'browser_download_url.*rustscan_[0-9]+\.[0-9]+\.[0-9]+_amd64\.deb"' |
+    cut -d '"' -f 4) || die "Failed to fetch RustScan download URL"
 
 # Download the RustScan .deb package
 echo -e "\e[33m⬇️  Downloading RustScan...\e[0m"
