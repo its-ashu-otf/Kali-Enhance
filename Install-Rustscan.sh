@@ -19,33 +19,37 @@ cat << "EOF"
 
                                  BY @its-ashu-otf
 EOF
-
 echo -e "\e[0m"
 
-# Update package lists and install dependencies
-echo -e "\e[36m📦 Updating package lists and installing dependencies...\e[0m"
-sudo apt update && sudo apt install -y wget curl || die "Failed to install dependencies"
+# Update & install required tools
+echo -e "\e[36m📦 Updating system and installing dependencies...\e[0m"
+sudo apt update && sudo apt install -y curl unzip wget || die "Failed to install required packages"
 
-# Fetch the latest RustScan release URL
-echo -e "\e[36m🌍 Fetching the latest RustScan release...\e[0m"
-RUSTSCAN_URL=$(curl -s https://api.github.com/repos/RustScan/RustScan/releases/latest |
-    grep -E 'browser_download_url.*rustscan_[0-9]+\.[0-9]+\.[0-9]+_amd64\.deb"' |
-    cut -d '"' -f 4) || die "Failed to fetch RustScan download URL"
+# Download URL
+RUSTSCAN_ZIP_URL="https://github.com/RustScan/RustScan/releases/latest/download/rustscan.deb.zip"
 
-# Download the RustScan .deb package
-echo -e "\e[33m⬇️  Downloading RustScan...\e[0m"
-wget -q --show-progress "$RUSTSCAN_URL" -O rustscan.deb || die "Failed to download RustScan"
+# Download RustScan
+echo -e "\e[33m⬇️  Downloading RustScan from:\n$RUSTSCAN_ZIP_URL\e[0m"
+curl -sSLo rustscan.zip "$RUSTSCAN_ZIP_URL" || die "Failed to download RustScan zip"
+
+# Extract .deb from .zip
+echo -e "\e[36m📂 Extracting .deb package from zip...\e[0m"
+unzip -o rustscan.zip || die "Failed to extract RustScan zip"
+
+# Find the .deb file
+RUSTSCAN_DEB=$(ls rustscan_*.deb 2>/dev/null | head -n 1)
+[[ -z "$RUSTSCAN_DEB" ]] && die "RustScan .deb file not found after extraction"
 
 # Install RustScan
 echo -e "\e[32m⚙️  Installing RustScan...\e[0m"
-dpkg -i rustscan.deb || die "Failed to install RustScan"
+sudo dpkg -i "$RUSTSCAN_DEB" || die "RustScan installation failed"
 
 # Clean up
-echo -e "\e[35m🧹 Cleaning up...\e[0m"
-rm -f rustscan.deb
+echo -e "\e[35m🧹 Cleaning up temporary files...\e[0m"
+rm -f rustscan.zip "$RUSTSCAN_DEB" rustscan.tmp* rustscan*.stripped
 
 # Verify installation
-echo -e "\e[32m✅ Verifying installation...\e[0m"
+echo -e "\e[32m🔍 Verifying RustScan installation...\e[0m"
 rustscan --version || die "RustScan installation verification failed"
 
 echo -e "\e[32m🎉 RustScan installation completed successfully!\e[0m"
