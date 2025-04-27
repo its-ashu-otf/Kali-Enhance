@@ -42,6 +42,19 @@ This script installs additional package managers (Flatpak and Snap) on Kali Linu
 - Installs Snapd and ensures its services are enabled and started.
 - Adds Snapd and Flatpak directories to the system-wide environment variables.
 
+### Install-Rustscan.sh
+
+This script install rustscan automatically and does everything that is neccesary. It performs the following tasks:
+
+- Uses wget to download rustscan latest release
+- Then uses apt to install the file
+
+### Fix stuttering audio in VM for Kali Linux.sh
+
+This script fixes stuttering audio in Kali Linux running on VMware 
+
+- Makes neccassary configuration files to fix the issue and restart the services
+
 ### Wi-Fi Driver Installer for 8821au 🛜
 
 This script installs the Wi-Fi driver for the 8821au chipset on Kali Linux. It automates the process of checking for system updates, installing necessary dependencies, and cloning and running the driver installation script from a GitHub repository.
