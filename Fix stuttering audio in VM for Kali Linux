@@ -1,0 +1,97 @@
+#!/bin/bash
+
+# ───────────────────────────────────────────────────────────
+# Script by its-ashu-otf
+# Fix stuttering audio in Virtual Machines for Kali Linux
+# ───────────────────────────────────────────────────────────
+
+set -euo pipefail
+
+# ───── Variables ────────────────────────────────────────────
+CONFIG_DIR="$HOME/.config/wireplumber/wireplumber.conf.d"
+CONFIG_FILE="$CONFIG_DIR/50-alsa-config.conf"
+BACKUP_FILE="$CONFIG_FILE.backup.$(date +%Y%m%d%H%M%S)"
+
+# Colors
+GREEN="\033[1;32m"
+YELLOW="\033[1;33m"
+RED="\033[1;31m"
+BLUE="\033[1;34m"
+NC="\033[0m" # No Color
+
+# ───── Functions ────────────────────────────────────────────
+print_success() { echo -e "${GREEN}[✔] $1${NC}"; }
+print_info()    { echo -e "${BLUE}[i] $1${NC}"; }
+print_warning() { echo -e "${YELLOW}[!] $1${NC}"; }
+print_error()   { echo -e "${RED}[✖] $1${NC}"; exit 1; }
+
+check_command() {
+    command -v "$1" >/dev/null 2>&1 || print_error "Required command '$1' not found."
+}
+
+restart_service() {
+    local service="$1"
+    if systemctl --user list-units --type=service | grep -q "$service"; then
+        print_info "Restarting $service..."
+        systemctl --user restart "$service"
+        print_success "$service restarted."
+    else
+        print_warning "Service '$service' not found or not running. Skipping."
+    fi
+}
+
+# ───── Main ─────────────────────────────────────────────────
+
+clear
+echo -e "${BLUE}"
+echo "───────────────────────────────────────────────────────────"
+echo "        Fix VM Audio Stuttering - Script by its-ashu-otf     "
+echo "───────────────────────────────────────────────────────────"
+echo -e "${NC}"
+
+print_info "Checking system requirements..."
+check_command systemctl
+check_command mkdir
+check_command cat
+
+print_info "Preparing configuration directory..."
+mkdir -p "$CONFIG_DIR"
+
+if [[ -f "$CONFIG_FILE" ]]; then
+    print_warning "Existing configuration detected."
+    print_info "Backing up existing config to: $BACKUP_FILE"
+    cp "$CONFIG_FILE" "$BACKUP_FILE"
+fi
+
+print_info "Writing new ALSA configuration..."
+cat > "$CONFIG_FILE" << EOF
+monitor.alsa.rules = [
+  {
+    matches = [
+      {
+        node.name = "~alsa_output.*"
+      }
+    ]
+    actions = {
+      update-props = {
+        api.alsa.period-size   = 1024
+        api.alsa.headroom      = 8192
+      }
+    }
+  }
+]
+EOF
+
+print_success "Configuration successfully written."
+
+restart_service wireplumber.service
+restart_service pipewire.service
+restart_service pipewire-pulse.service
+
+echo ""
+print_success "Audio stuttering fix applied successfully!"
+echo ""
+echo -e "${GREEN}★ Script completed. Enjoy glitch-free audio! ★${NC}"
+echo ""
+
+exit 0
